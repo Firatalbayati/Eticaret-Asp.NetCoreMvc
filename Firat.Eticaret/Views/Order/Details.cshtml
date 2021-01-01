@@ -1,0 +1,120 @@
+﻿@using Firat.Eticaret.Entity
+@model Firat.Eticaret.Models.OrderDetailsModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h2>Sipariş Detay Bilgileri</h2>
+            <hr />
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["message"]
+                </div>
+            }
+
+            <dl class="row">
+                
+                
+                <dt class="col-sm-3">Kullanıcı Adı</dt>
+                <dd class="col-sm-9">@Model.UserName<dd>
+
+                <dt class="col-sm-3">Sipariş Durumu</dt>
+                <dd class="col-sm-9">
+
+                    @using (Html.BeginForm("UpdateOrderState", "Order", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(i => i.OrderId)
+
+                        <dl class="row">
+                            <dt class="col-sm-8">
+                                @Html.EnumDropDownListFor(i => i.OrderState, "Select Order State", new {@class = "form-control"})
+                            </dt>
+                            <dd class="col-sm-4">
+                                <button type="submit" class="btn btn-primary">Güncelle</button>
+                            </dd>
+                        </dl>
+                    }
+
+                </dd>
+
+                <dt class="col-sm-3">Sipariş Id</dt>
+                <dd class="col-sm-9">@Model.OrderId</dd>
+
+                <dt class="col-sm-3">Sipariş Numarası</dt>
+                <dd class="col-sm-9">@Model.OrderNumber</dd>
+
+                <dt class="col-sm-3">Toplam</dt>
+                <dd class="col-sm-9">
+                    <i class="fa fa-try" aria-hidden="true"></i>
+                    @Model.Total
+                </dd>
+
+                <dt class="col-sm-3">Sipariş tarihi</dt>
+                <dd class="col-sm-9">@Model.OrderDate</dd>
+
+
+                <dt class="col-sm-3">Adres</dt>
+                <dd class="col-sm-9">
+                    @Model.AdresBasligi
+                    <hr/>
+                    @Model.Adres
+                    <br/>
+                    @Model.Sehir - @Model.Semt - @Model.Mahalle
+                    <br/>
+                    @Model.PostaKodu
+                </dd>
+
+                <dt class="col-sm-3">Ürünler</dt>
+                <dd class="col-sm-9">
+                    <table class="table table-bordered">
+
+                        <thead>
+                        <tr>
+                            <th>Fotoğraf</th>
+                            <th style="width: 45%;">Ürün Adı</th>
+                            <th>Miktar</th>
+                            <th>Fiyat</th>
+                            <th style="width: 10%;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        @foreach (var item in Model.Orderlines)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@item.Image" width="70"/>
+                                </td>
+                                <td>
+                                    @item.ProductName
+                                </td>
+                                <td>
+                                    @item.Quantity
+                                </td>
+                                <td>
+                                    <i class="fa fa-try" aria-hidden="true"></i>
+                                    @item.Price
+                                </td>
+                                <td>
+                                    <a href="/Home/Details/@item.ProductId" class="btn btn-primary btn-sm" target="_blank">
+                                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                        Ürün Detayları
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </dd>
+
+            </dl>
+
+        </div>
+    </div>
+</div>

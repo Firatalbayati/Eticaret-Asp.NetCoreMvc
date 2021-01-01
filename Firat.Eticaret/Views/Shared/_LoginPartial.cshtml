@@ -1,0 +1,27 @@
+﻿
+<ul class="navbar-nav  my-2 my-lg-0">
+    @if (Request.IsAuthenticated)
+    {
+        <li class="nav-item active">
+            <a class="nav-link" href="/Account">@User.Identity.Name</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/Account/Logout">Çıkış Yap</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item active">
+            <a class="nav-link" href="/Account/Login">Giriş Yap</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/Account/Register">Üye Ol</a>
+        </li>
+        <li>
+            <a class="btn btn-primary" href="/Order">Yönetici Girişi</a>
+        </li>
+    }
+
+
+
+</ul>
